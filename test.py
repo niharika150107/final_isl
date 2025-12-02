@@ -10,8 +10,6 @@ import module1 as m1
 import module2 as m2
 import module3 as m3
 
-# --- VISUAL CUSTOMIZATION FUNCTIONS (from final.py) ---
-
 def set_robot_color(env, color):
     """
     Set the color of all robot geoms in the MuJoCo environment.
@@ -52,7 +50,7 @@ def set_floor_color(env, color):
                 mat.rgba = color
             break  # Exit after finding the floor
 
-# --- END VISUAL CUSTOMIZATION FUNCTIONS ---
+
 
 
 def parse_args():
@@ -123,4 +121,4 @@ if __name__ == "__main__":
         env.render()
 
     env.close()
-    print("Simulation finished.")
+    print("Simulation Donr.")
