@@ -5,6 +5,7 @@ This guide explains how to:
 1. Create and activate a virtual environment
 2. Install dependencies using `req.txt`
 3. Run the training script
+4. how to test
 
 ---
 
@@ -119,4 +120,4 @@ Place your pose images inside `pose_images/`.
 
 ---
 
-Feel free to ask if you want a version with screenshots or a Colab setup guide.
+
