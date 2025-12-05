@@ -8,14 +8,12 @@ This guide will walk you through getting the code, setting up the environment, e
 
 ---
 
-## 🏁 Getting Started
+## 🏁 Getting Started 
 
 ### **Step 1 — Clone the Repository**
 
-First, you need to get a local copy of the project code. Open your terminal and run the following command, replacing `<repository_url>` with the actual URL of your GitHub repository.
-
 ```bash
-git clone <repository_url>
+git clone https://github.com/niharika150107/final_isl.git
 ```
 
 Once the clone is complete, navigate into the newly created project directory:
