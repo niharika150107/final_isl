@@ -230,14 +230,24 @@ When you are finished working on the project, you can deactivate the virtual env
 deactivate
 ```
 ### image and video preview
-<p align="center">
-  <img src="capture/image.png" width="250"/>
-</p>
+### 🤖 Pose Output + Walking Demo
 
-<p align="center">
-  <a href="capture/video.mp4">▶️ Watch Robot Walking Demo</a>
-</p>
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
 
+  <!-- Left: Image -->
+  <img src="capture/" alt="Pose Image" width="300" />
+
+  <!-- Right: Video -->
+  <video 
+    src="https://github.com/niharika150107/final_isl/blob/942f5f550bd9b22d43c3a668213a679a439dff94/capture/videoofwalkingrobot.mp4"
+    width="300" 
+    controls 
+    autoplay 
+    loop 
+    muted>
+  </video>
+
+</div>
 
 ---
 
