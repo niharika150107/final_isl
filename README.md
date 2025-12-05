@@ -229,13 +229,12 @@ When you are finished working on the project, you can deactivate the virtual env
 ```bash
 deactivate
 ```
-### image and video preview
 ### 🤖 Pose Output + Walking Demo
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
 
   <!-- Left: Image -->
-  <img src="capture/" alt="Pose Image" width="300" />
+  <img src="capture/image.png" alt="Pose Image" width="300" />
 
   <!-- Right: Video -->
   <video 
