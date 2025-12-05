@@ -112,6 +112,22 @@ python module1.py pose_images/person1.png
 -   Creates a `skeleton_drawn/` folder if it doesn't exist.
 -   Saves a visualization with a green skeleton and red joints to `skeleton_drawn/person1_skeleton.jpg`.
 
+  ### 🔹 Example: Pose Extraction Output
+
+The following example shows how `module1.py` extracts a 19-joint pose vector and generates a skeleton overlay.
+
+#### **Input Image**
+![Input Image](pose_images/person5.jpg)
+
+#### **Skeleton Visualization Output**
+![Skeleton Output](skeleton_drawn/person5_skeleton.jpg)
+
+This visualization is automatically saved when running:
+
+```bash
+python module1.py pose_images/person5.jpg
+
+
 #### **Batch Processing (Optional)**
 To process all images in the `pose_images` folder at once:
 
@@ -213,6 +229,3 @@ deactivate
 
 ---
 
-## 📜 License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
