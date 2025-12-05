@@ -229,6 +229,17 @@ When you are finished working on the project, you can deactivate the virtual env
 ```bash
 deactivate
 ```
+### image and video preview
+<p align="center">
+  <img src="pose_images/person5.jpg" width="250"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="capture/image.png" width="250"/>
+</p>
+
+<p align="center">
+  <a href="capture/video.mp4">▶️ Watch Robot Walking Demo</a>
+</p>
+
 
 ---
 
