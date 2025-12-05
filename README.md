@@ -229,29 +229,27 @@ When you are finished working on the project, you can deactivate the virtual env
 ```bash
 deactivate
 ```
+
 ### 🤖 Pose Output + Walking Demo
 
 <table>
-  <tr>
-    <td align="center" width="300">
-      <img src="capture/image.png" alt="Pose Image" width="260">
-      <br>
-      <em>Initial pose extracted from image</em>
-    </td>
-
-    <td align="center" width="300">
-      <video 
-        src="https://github.com/niharika150107/final_isl/raw/refs/heads/main/capture/videoofwalkingrobot.mp4"
-        width="260"
-        controls
-        loop
-        muted>
-      </video>
-      <br>
-      <em>Humanoid walking simulation</em>
-    </td>
-  </tr>
+<tr>
+<td align="center" width="300">
+<img src="capture/image.png" alt="Pose Image" width="260"><br>
+<em>Initial pose extracted from image</em>
+</td>
+<td align="center" width="300">
+<video src="https://github.com/niharika150107/final_isl/raw/refs/heads/main/capture/videoofwalkingrobot.mp4"
+       width="260"
+       controls
+       loop
+       muted>
+</video><br>
+<em>Humanoid walking simulation</em>
+</td>
+</tr>
 </table>
+
 
 
 
