@@ -239,7 +239,7 @@ deactivate
 <em>Initial pose extracted from image</em>
 </td>
 <td align="center" width="300">
-<video src="https://github.com/niharika150107/final_isl/raw/refs/heads/main/capture/videoofwalkingrobot.mp4"
+<video src="https://private-user-images.githubusercontent.com/186163082/522980344-2fbdb7e0-f23a-4d3c-b7ab-743cbffb1cfe.mp4?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjQ5NDM2NjIsIm5iZiI6MTc2NDk0MzM2MiwicGF0aCI6Ii8xODYxNjMwODIvNTIyOTgwMzQ0LTJmYmRiN2UwLWYyM2EtNGQzYy1iN2FiLTc0M2NiZmZiMWNmZS5tcDQ_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMjA1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTIwNVQxNDAyNDJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1iNGE4Mzk0YWRlNjI0MWY0ZjhlZTgyYmQ3NDQ3MzY1YzhiYjUzNTI4ZjRiMjZhNWI2ZjIzMjFlZjdkZDFlMDRhJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.Dy8fqOOpVdQAVp2vtS2IcwYQ4txVmQwR3LTJ7nLblGE"
        width="260"
        controls
        loop
