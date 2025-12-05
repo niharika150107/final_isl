@@ -231,8 +231,6 @@ deactivate
 ```
 ### 🤖 Pose Output + Walking Demo
 
-### 🤖 Pose Output + Walking Demo
-
 <table>
   <tr>
     <td align="center">
@@ -242,7 +240,7 @@ deactivate
     </td>
     <td align="center">
       <video 
-        src="https://raw.githubusercontent.com/niharika150107/final_isl/942f5f550bd9b22d43c3a668213a679a439dff94/capture/videoofwalkingrobot.mp4"
+        src="https://github.com/niharika150107/final_isl/commit/942f5f550bd9b22d43c3a668213a679a439dff94#diff-e80d7efc86d282a3e20517deae71c324ce5452b8e15e29496f03f8db8444d3c1"
         width="260"
         controls
         loop
