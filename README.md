@@ -233,12 +233,13 @@ deactivate
 
 <table>
   <tr>
-    <td align="center">
+    <td align="center" width="300">
       <img src="capture/image.png" alt="Pose Image" width="260">
       <br>
       <em>Initial pose extracted from image</em>
     </td>
-    <td align="center">
+
+    <td align="center" width="300">
       <video 
         src="https://github.com/niharika150107/final_isl/raw/refs/heads/main/capture/videoofwalkingrobot.mp4"
         width="260"
@@ -251,6 +252,7 @@ deactivate
     </td>
   </tr>
 </table>
+
 
 
 ---
