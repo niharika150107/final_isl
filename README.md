@@ -238,7 +238,7 @@ deactivate
 
   <!-- Right: Video -->
   <video 
-    src="https://github.com/niharika150107/final_isl/blob/942f5f550bd9b22d43c3a668213a679a439dff94/capture/videoofwalkingrobot.mp4"
+    src="capture/videoofwalkingrobot.mp4"
     width="300" 
     controls 
     autoplay 
