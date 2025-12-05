@@ -1,123 +1,192 @@
-# Humanoid Project — Setup & Training Guide
+# Humanoid Locomotion Project
 
-This guide explains how to:
+This project focuses on training a humanoid agent to walk using the Proximal Policy Optimization (PPO) algorithm within a MuJoCo simulation environment. The project is structured into modules for pose estimation, environment setup, and the learning agent.
 
-1. Create and activate a virtual environment
-2. Install dependencies using `req.txt`
-3. Run the training script
-4. how to test
+This guide will walk you through setting up the environment, extracting poses from images, training the model, and testing the results.
 
 ---
 
-## 📌 1. Create a Virtual Environment
+## 📋 Prerequisites
 
-### **Step 1 — Install venv (if not installed)**
+-   Python 3.8+
+-   `pip` (Python package installer)
+-   A virtual environment tool (like `venv`)
 
-```bash
-sudo apt install python3-venv
-```
+---
 
-### **Step 2 — Create a virtual environment**
+## 🚀 Setup
+
+Follow these steps to prepare your development environment.
+
+### **Step 1 — Create a Virtual Environment**
+
+It's highly recommended to use a virtual environment to manage project dependencies.
 
 ```bash
 python3 -m venv venv
 ```
 
-### **Step 3 — Activate the environment**
+### **Step 2 — Activate the Environment**
 
 ```bash
 source venv/bin/activate
 ```
+You should now see `(venv)` at the beginning of your terminal prompt.
 
-You should now see `(venv)` in your terminal prompt.
+### **Step 3 — Install Dependencies**
 
----
-
-## 📌 2. Install Requirements
-
-Make sure `req.txt` is inside your project folder.
-
-### Install all dependencies:
+Ensure `req.txt` is in your project's root directory. Then, install all required packages.
 
 ```bash
 pip install --upgrade pip
 pip install -r req.txt
 ```
-
-If installation is slow, it is normal — MuJoCo, Torch, and MediaPipe are large packages.
+> **Note:** Installation may take some time as packages like `torch`, `mujoco`, and `mediapipe` are large.
 
 ---
 
-## 📌 3. Run Training
+## 📁 Project Structure
 
-Once the virtual environment is active and dependencies are installed, run:
+Your project directory should look like this:
 
-```bash
-python train.py --epochs 100 --n-steps 512 --batch-size 32
+```
+humanoid_project/
+├── train.py                 # Script to train the PPO agent
+├── test.py                  # Script to test the trained agent
+├── module1.py               # Pose extraction from images
+├── module2.py               # MuJoCo Humanoid Environment Wrapper
+├── module3.py               # PPO Agent definition
+├── req.txt                  # List of Python dependencies
+├── pose_images/             # Folder for input pose images
+│   ├── person1.png
+│   └── ...
+├── models/                  # Folder where trained models are saved
+│   └── (created after training)
+└── skeleton_drawn/          # Folder for pose visualization output
+    └── (created by module1.py)
 ```
 
-You can adjust the arguments:
+---
 
-* `--epochs` → number of training epochs
-* `--n-steps` → rollout length
-* `--batch-size` → PPO minibatch size
+## 🎮 Usage Guide
 
-Example:
+### 1. Pose Extraction from Images (`module1.py`)
+
+This script extracts a 19-joint pose vector from an image and creates a visualization with a skeleton overlay.
+
+#### **Command**
+
+```bash
+python module1.py <path_to_image>
+```
+
+#### **Example**
+
+```bash
+python module1.py pose_images/person1.png
+```
+
+#### **What it does:**
+-   Analyzes `pose_images/person1.png`.
+-   Prints the 19-joint pose vector to the console.
+-   Creates a `skeleton_drawn/` folder if it doesn't exist.
+-   Saves a visualization with a green skeleton and red joints to `skeleton_drawn/person1_skeleton.jpg`.
+
+#### **Batch Processing (Optional)**
+To process all images in the `pose_images` folder at once:
+
+```bash
+for image in pose_images/*.png; do
+    python module1.py "$image"
+done
+```
+
+---
+
+### 2. Training the Agent (`train.py`)
+
+This script starts the training process for the humanoid agent. It will save the trained model periodically in the `models/` directory.
+
+#### **Command**
+
+```bash
+python train.py --epochs <number> --n-steps <number> --batch-size <number>
+```
+
+#### **Example**
 
 ```bash
 python train.py --epochs 200 --n-steps 1024 --batch-size 64
 ```
 
+#### **Arguments:**
+-   `--epochs`: The total number of training cycles (e.g., `200`).
+-   `--n-steps`: The number of environment steps per rollout (e.g., `1024`).
+-   `--batch-size`: The minibatch size for the PPO optimizer (e.g., `64`).
+
 ---
 
-## 📌 4. Deactivating the Virtual Environment
+### 3. Testing the Trained Model (`test.py`)
 
-When you're done:
+This script loads a trained model and runs a simulation to visualize the agent's performance in a GUI window.
+
+#### **Command**
+
+```bash
+python test.py --model-path <path_to_model.pt> [--image-path <path_to_image>]
+```
+
+#### **Example**
+
+```bash
+# Test with a default initial pose
+python test.py --model-path models/humanoid_ppo_epoch_200.pt
+
+# Test with an initial pose from an image
+python test.py --model-path models/humanoid_ppo_epoch_200.pt --image-path pose_images/person1.png
+```
+
+#### **Arguments:**
+-   `--model-path` (Required): Path to the trained `.pt` model file generated by `train.py`.
+-   `--image-path` (Optional): Path to an image to set the initial pose of the humanoid using `module1.py`.
+
+#### **What to Expect:**
+-   A GUI window will open, showing the 3D simulation.
+-   The robot will be colored blue, and the floor will be white.
+-   The simulation will run until the episode ends (e.g., the agent falls) or you close the window.
+-   Close the simulation window to exit the script.
+
+---
+
+## 🛠️ Troubleshooting
+
+### **Process killed during training**
+WSL (Windows Subsystem for Linux) may run out of RAM. You can increase its memory allocation.
+
+1.  Create or edit a `.wslconfig` file in your Windows user directory (`C:\Users\<YourUserName>\.wslconfig`).
+2.  Add the following content, adjusting the values as needed:
+    ```ini
+    [wsl2]
+    memory=12GB
+    swap=16GB
+    ```
+3.  Save the file and restart WSL from an **Administrator** PowerShell or Command Prompt:
+    ```bash
+    wsl --shutdown
+    ```
+
+### **`ModuleNotFoundError: No module named '...'`**
+This error usually means the virtual environment is not activated or the dependencies were not installed correctly.
+1.  Ensure your terminal prompt shows `(venv)`.
+2.  If not, activate it again: `source venv/bin/activate`.
+3.  Re-install dependencies: `pip install -r req.txt`.
+
+---
+
+## 📌 Deactivating the Virtual Environment
+
+When you are finished working on the project, you can deactivate the virtual environment:
 
 ```bash
 deactivate
 ```
-
----
-
-## 📌 5. Troubleshooting
-
-### **Process killed during training**
-
-WSL may run out of RAM. Increase memory in `.wslconfig`:
-
-```
-[wsl2]
-memory=12GB
-swap=16GB
-```
-
-Then restart WSL:
-
-```bash
-wsl --shutdown
-```
-
----
-
-## 📌 6. Project Structure
-
-```
-humanoid_project/
-├── train.py
-├── test.py
-├── module1.py
-├── module2.py
-├── module3.py
-├── req.txt
-└── pose_images/
-    ├── person1.png
-    ├── person2.png
-    └── ...
-```
-
-Place your pose images inside `pose_images/`.
-
----
-
-
