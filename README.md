@@ -1,39 +1,61 @@
+
+
 # Humanoid Locomotion Project
 
 This project focuses on training a humanoid agent to walk using the Proximal Policy Optimization (PPO) algorithm within a MuJoCo simulation environment. The project is structured into modules for pose estimation, environment setup, and the learning agent.
 
-This guide will walk you through setting up the environment, extracting poses from images, training the model, and testing the results.
+This guide will walk you through getting the code, setting up the environment, extracting poses from images, training the model, and testing the results.
 
 ---
 
-## 📋 Prerequisites
+## 🏁 Getting Started
 
--   Python 3.8+
--   `pip` (Python package installer)
--   A virtual environment tool (like `venv`)
+### **Step 1 — Clone the Repository**
+
+First, you need to get a local copy of the project code. Open your terminal and run the following command, replacing `<repository_url>` with the actual URL of your GitHub repository.
+
+```bash
+git clone <repository_url>
+```
+
+Once the clone is complete, navigate into the newly created project directory:
+
+```bash
+cd humanoid_project
+```
 
 ---
 
-## 🚀 Setup
+## 📋 Prerequisites (Step 2)
 
-Follow these steps to prepare your development environment.
+Before you can run the project, ensure you have the following installed on your system:
 
-### **Step 1 — Create a Virtual Environment**
+-   **Python 3.8+**
+-   **Git** (for cloning the repository). If you don't have it, download it from [git-scm.com](https://git-scm.com/).
+-   **`pip`** (Python package installer, usually comes with Python).
 
-It's highly recommended to use a virtual environment to manage project dependencies.
+---
+
+## 🚀 Setup (Step 3)
+
+Follow these steps inside your `humanoid_project` directory to prepare the development environment.
+
+### **Step 3.1 — Create a Virtual Environment**
+
+It's highly recommended to use a virtual environment to manage project dependencies and avoid conflicts.
 
 ```bash
 python3 -m venv venv
 ```
 
-### **Step 2 — Activate the Environment**
+### **Step 3.2 — Activate the Environment**
 
 ```bash
 source venv/bin/activate
 ```
 You should now see `(venv)` at the beginning of your terminal prompt.
 
-### **Step 3 — Install Dependencies**
+### **Step 3.3 — Install Dependencies**
 
 Ensure `req.txt` is in your project's root directory. Then, install all required packages.
 
@@ -47,7 +69,7 @@ pip install -r req.txt
 
 ## 📁 Project Structure
 
-Your project directory should look like this:
+After cloning the repository and completing the setup, your project directory should look like this:
 
 ```
 humanoid_project/
@@ -68,7 +90,7 @@ humanoid_project/
 
 ---
 
-## 🎮 Usage Guide
+## 🎮 Usage Guide (Step 4)
 
 ### 1. Pose Extraction from Images (`module1.py`)
 
@@ -190,3 +212,9 @@ When you are finished working on the project, you can deactivate the virtual env
 ```bash
 deactivate
 ```
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
