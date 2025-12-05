@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import mediapipe as mp
 import os
+from pathlib import Path
 
 # --- Configuration for 19 Joints based on the 25-point model ---
 # Each tuple is: (joint_name, point1_idx, point2_idx, point3_idx)
@@ -30,6 +31,18 @@ JOINT_CONFIG_25 = [
     ('right_wrist', 3, 4, 22),       # Right wrist (r_elbow, r_wrist, r_big_toe - as a reference point)
 ]
 
+# Define skeleton connections for visualization
+SKELETON_CONNECTIONS = [
+    (0, 1), (1, 2), (2, 3), (3, 4),  # Right arm
+    (1, 5), (5, 6), (6, 7),          # Left arm
+    (1, 8), (8, 9), (9, 10), (10, 11),  # Right leg
+    (8, 12), (12, 13), (13, 14),     # Left leg
+    (0, 15), (15, 17),               # Right face
+    (0, 16), (16, 18),               # Left face
+    (14, 19), (14, 20), (14, 21),    # Left foot
+    (11, 22), (11, 23), (11, 24)     # Right foot
+]
+
 def load_image(file_path: str) -> np.ndarray:
     """Loads an image from a file path and converts it to RGB float32 format."""
     image_bgr = cv2.imread(file_path)
@@ -42,13 +55,44 @@ def preprocess_image(image: np.ndarray, target_size=(256, 256)) -> np.ndarray:
     """Resizes the image for pose estimation."""
     return cv2.resize(image, target_size)
 
+def visualize_skeleton(image, keypoints, output_path):
+    """Draws skeleton on image and saves it."""
+    # Convert back to BGR for OpenCV drawing
+    vis_image = (image * 255).astype(np.uint8)
+    vis_image = cv2.cvtColor(vis_image, cv2.COLOR_RGB2BGR)
+    
+    # Draw skeleton connections
+    for connection in SKELETON_CONNECTIONS:
+        pt1_idx, pt2_idx = connection
+        if pt1_idx < len(keypoints) and pt2_idx < len(keypoints):
+            if keypoints[pt1_idx][3] > 0.5 and keypoints[pt2_idx][3] > 0.5:  # Check visibility
+                pt1 = (int(keypoints[pt1_idx][0] * image.shape[1]), 
+                      int(keypoints[pt1_idx][1] * image.shape[0]))
+                pt2 = (int(keypoints[pt2_idx][0] * image.shape[1]), 
+                      int(keypoints[pt2_idx][1] * image.shape[0]))
+                cv2.line(vis_image, pt1, pt2, (0, 255, 0), 2)  # Green lines
+    
+    # Draw joint points
+    for i, kp in enumerate(keypoints):
+        if kp[3] > 0.5:  # Check visibility
+            center = (int(kp[0] * image.shape[1]), 
+                     int(kp[1] * image.shape[0]))
+            cv2.circle(vis_image, center, 3, (0, 0, 255), -1)  # Red circles
+    
+    # Save the image
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    cv2.imwrite(output_path, vis_image)
+    return vis_image
+
 class PoseExtractor:
     """Extracts 33 keypoints from an image using MediaPipe."""
-    def __init__(self):
+    def __init__(self, visualize=False, output_dir="skeleton_drawn"):
         self.pose = mp.solutions.pose
         self.detector = self.pose.Pose(static_image_mode=True, model_complexity=2, min_detection_confidence=0.5)
+        self.visualize = visualize
+        self.output_dir = output_dir
 
-    def extract_keypoints(self, image: np.ndarray) -> np.ndarray:
+    def extract_keypoints(self, image: np.ndarray, image_path=None) -> np.ndarray:
         """Processes an image and returns Body25-like keypoints."""
         results = self.detector.process((image * 255).astype(np.uint8))
         if not results.pose_landmarks:
@@ -87,7 +131,16 @@ class PoseExtractor:
             keypoints_33[27],           # 23 RSmallToe
             keypoints_33[30]            # 24 RHeel
         ]
-        return np.array(body25)
+        
+        body25_array = np.array(body25)
+        
+        # Visualize if requested
+        if self.visualize and image_path:
+            filename = Path(image_path).stem
+            output_path = os.path.join(self.output_dir, f"{filename}_skeleton.jpg")
+            visualize_skeleton(image, body25_array, output_path)
+            
+        return body25_array
 
 def _unit(v): return v / (np.linalg.norm(v) + 1e-6)
 def _angle_between(v1, v2): return np.arccos(np.clip(np.dot(_unit(v1), _unit(v2)), -1.0, 1.0))
@@ -125,7 +178,7 @@ def body25_to_pose19(body25_keypoints):
         pose_19[i] = _calculate_joint_angle(joint_name, p1, p2, p3, body25_keypoints)
     return pose_19
 
-def get_initial_pose_from_image(image_path: str) -> np.ndarray:
+def get_initial_pose_from_image(image_path: str, visualize=True) -> np.ndarray:
     """
     High-level function to get a 19-joint pose from an image file.
     Returns a zero vector if no pose is detected.
@@ -133,8 +186,8 @@ def get_initial_pose_from_image(image_path: str) -> np.ndarray:
     try:
         image = load_image(image_path)
         preprocessed = preprocess_image(image)
-        extractor = PoseExtractor()
-        body25_kp = extractor.extract_keypoints(preprocessed)
+        extractor = PoseExtractor(visualize=visualize)
+        body25_kp = extractor.extract_keypoints(preprocessed, image_path)
         if len(body25_kp) > 0:
             return body25_to_pose19(body25_kp)
         else:
@@ -143,3 +196,23 @@ def get_initial_pose_from_image(image_path: str) -> np.ndarray:
     except Exception as e:
         print(f"Error processing image {image_path}: {e}")
         return np.zeros(19, dtype=np.float32)
+
+
+# --- Command-Line Execution Block ---
+if __name__ == "__main__":
+    import argparse
+
+    # Set up the command-line argument parser
+    parser = argparse.ArgumentParser(description="Extract a 19-joint pose from an image and visualize the skeleton.")
+    parser.add_argument("image_path", type=str, help="Path to the input image file.")
+    
+    args = parser.parse_args()
+
+    # Call the main function with the provided image path
+    print(f"Processing image: {args.image_path}")
+    pose_vector = get_initial_pose_from_image(args.image_path, visualize=True)
+
+    # Print the results
+    print("\n--- Extraction Complete ---")
+    print(f"Generated 19-joint pose vector:\n{pose_vector}")
+    print("\nA visualization of the skeleton has been saved in the 'skeleton_drawn' folder.")
