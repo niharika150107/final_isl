@@ -231,22 +231,29 @@ deactivate
 ```
 ### 🤖 Pose Output + Walking Demo
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+### 🤖 Pose Output + Walking Demo
 
-  <!-- Left: Image -->
-  <img src="capture/image.png" alt="Pose Image" width="300" />
+<table>
+  <tr>
+    <td align="center">
+      <img src="capture/image.png" alt="Pose Image" width="260">
+      <br>
+      <em>Initial pose extracted from image</em>
+    </td>
+    <td align="center">
+      <video 
+        src="https://raw.githubusercontent.com/niharika150107/final_isl/942f5f550bd9b22d43c3a668213a679a439dff94/capture/videoofwalkingrobot.mp4"
+        width="260"
+        controls
+        loop
+        muted>
+      </video>
+      <br>
+      <em>Humanoid walking simulation</em>
+    </td>
+  </tr>
+</table>
 
-  <!-- Right: Video -->
-  <video 
-    src="capture/videoofwalkingrobot.mp4"
-    width="300" 
-    controls 
-    autoplay 
-    loop 
-    muted>
-  </video>
-
-</div>
 
 ---
 
